@@ -12,7 +12,7 @@ public class Player : NetworkBehaviour
 
     public List<GameState> XunLiangameStates = new List<GameState>();
 
-    public LinkedListYanXiState CurrentlinkedListYanXiState;
+    //public LinkedListYanXiState FirstlinkedListYanXiState;
 
     public bool Istick =false;
 
@@ -74,9 +74,20 @@ public class Player : NetworkBehaviour
     /// </summary>
     private void IniXunLianLinkedList()
     {
+        XunLiangameStates.Add(GameState.角色介绍);
         XunLiangameStates.Add(GameState.训练演习选人);
-        XunLiangameStates.Add(GameState.训练演习组长警示);
-        XunLiangameStates.Add(GameState.副组长通知各人员就位);
+        XunLiangameStates.Add(GameState.训练前情提要);
+        XunLiangameStates.Add(GameState.训练演习组长预先报警);
+        XunLiangameStates.Add(GameState.训练演习显示组长广播内容);
+        XunLiangameStates.Add(GameState.训练演习副组长通知各人员就位);
+        XunLiangameStates.Add(GameState.训练演习各人员就位);
+        XunLiangameStates.Add(GameState.训练疏散引导员通知);
+        XunLiangameStates.Add(GameState.训练居民引导员游戏);
+        XunLiangameStates.Add(GameState.训练空袭警报);
+        XunLiangameStates.Add(GameState.训练进入人防游戏);
+        XunLiangameStates.Add(GameState.训练解除警报);
+        XunLiangameStates.Add(GameState.训练消除空袭后果);
+        XunLiangameStates.Add(GameState.训练总结);
 
         for (int i = 0; i < GameManager.MAX_XUN_LIAN_STATE; i++)
         {
@@ -99,8 +110,7 @@ public class Player : NetworkBehaviour
             linkedListYanXiStates[i].M_GameState = XunLiangameStates[i];
         }
 
-        //设置当前的默认值
-        CurrentlinkedListYanXiState = linkedListYanXiStates[0];
+
     }
 
     //修改服务器状态值
@@ -112,13 +122,13 @@ public class Player : NetworkBehaviour
 
 //        GameManager.instance.SetAllCharacterStateVal(_gameStates);
 
-        if (_gameStates==GameState.训练演习选人)
+        if (_gameStates==GameState.角色介绍)
         {
             //开始倒计时
             if (!Istick)
             {
                 Istick = true;//确保不会死循环
-                CurrentlinkedListYanXiState.ServerSetState();
+                linkedListYanXiStates[0].ServerSetState();
             }
             else
             {
@@ -263,7 +273,7 @@ public class LinkedListYanXiState
 
         if (next == null)
         {
-            if (M_GameState != GameState.训练演习选人)
+            if (M_GameState != GameState.角色介绍)
             {
                 GameManager.instance.tick.UnRegisterfinishCountDownEvent(ServerSetState);
             }
@@ -273,7 +283,7 @@ public class LinkedListYanXiState
         }
         else
         {
-            if (M_GameState != GameState.训练演习选人)
+            if (M_GameState != GameState.角色介绍)
             {
                 GameManager.instance.tick.UnRegisterfinishCountDownEvent(ServerSetState);
             }

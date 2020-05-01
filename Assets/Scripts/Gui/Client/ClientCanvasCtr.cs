@@ -19,15 +19,17 @@ public class ClientCanvasCtr : MonoBehaviour
             instance = this;
         }
 
-        XunLiangameStates.Add(GameState.训练演习组长警示);
-        XunLiangameStates.Add(GameState.副组长通知各人员就位);
+        //这个是有两种情况的
+        XunLiangameStates.Add(GameState.训练演习组长预先报警);
+       // XunLiangameStates.Add(GameState.训练演习显示组长广播内容);
 
 
 
         GameState_ClientGui_kP.Add(GameState.默认界面, ClintGui[0]);
-        GameState_ClientGui_kP.Add(GameState.训练演习选人, ClintGui[1]);
-        GameState_ClientGui_kP.Add(GameState.训练演习组长警示, ClintGui[2]);
-     //   GameState_ClientGui_kP.Add(GameState.副组长通知各人员就位, ClintGui[3]);
+        GameState_ClientGui_kP.Add(GameState.角色介绍, ClintGui[1]);
+        GameState_ClientGui_kP.Add(GameState.训练演习选人, ClintGui[2]);
+        //GameState_ClientGui_kP.Add(GameState.训练演习组长预先报警, ClintGui[3]);
+       // GameState_ClientGui_kP.Add(GameState.训练演习组长预先报警, ClintGui[4]);
 
         HideAll();
     }

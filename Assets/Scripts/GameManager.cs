@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 public class GameManager : NetworkBehaviour
 {
-    public static  int MAX_XUN_LIAN_STATE = 3;
+    public static  int MAX_XUN_LIAN_STATE = 14;
 
     public static GameManager instance;
 
@@ -149,8 +149,8 @@ public class GameManager : NetworkBehaviour
     }
     public void Awake()
     {
-        SelectID_ActiveState_KP.Add(0, GameState.训练演习组长警示);
-        SelectID_ActiveState_KP.Add(1, GameState.副组长通知各人员就位);
+        SelectID_ActiveState_KP.Add(0, GameState.训练演习组长预先报警);
+        SelectID_ActiveState_KP.Add(1, GameState.训练演习副组长通知各人员就位);
     }
 
     public void OnEnable()
@@ -219,4 +219,8 @@ public class GameManager : NetworkBehaviour
 
 }
 
-public enum GameState {默认界面,播放视频,问答, 训练演习选人, 训练演习组长警示,副组长通知各人员就位}
+public enum GameState {默认界面,播放视频,问答,角色介绍,
+    训练演习选人, 训练前情提要,训练演习组长预先报警,训练演习显示组长广播内容, 训练演习副组长通知各人员就位
+    ,训练演习各人员就位,训练疏散引导员通知,训练居民引导员游戏,训练空袭警报,训练进入人防游戏,训练解除警报,训练消除空袭后果,
+    训练总结,
+}

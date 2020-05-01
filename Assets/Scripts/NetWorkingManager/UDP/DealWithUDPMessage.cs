@@ -48,7 +48,7 @@ public class DealWithUDPMessage : NetworkBehaviour
             {
                 GameManager.GetServerPlayer().Istick = false;
 
-                PlayerChangeState(GameState.训练演习选人);
+                PlayerChangeState(GameState.角色介绍);
 
             }
             else if (dataTest == "1001")
