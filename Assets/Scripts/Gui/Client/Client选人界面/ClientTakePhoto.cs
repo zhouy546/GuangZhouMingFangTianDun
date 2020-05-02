@@ -67,6 +67,15 @@ public class ClientTakePhoto : I_Image
     public void TurnOffCam()
     {
         Player player = GameManager.GetCurrentLocalPlayer();
+
+        byte[] textureData = M_Utility.TextureToTexture2D(background.texture).EncodeToJPG();
+
+        Debug.Log(player.name + "玩家将图片同步到服务器");
+
+        player.CmdUpdateCharacterPhoto(textureData, player.name);
+
+        next.Show();//显示选人画面
+
         if (!player.isServer && player.isLocalPlayer)
         {
             WebCamDevice[] devices = WebCamTexture.devices;
@@ -79,13 +88,7 @@ public class ClientTakePhoto : I_Image
 
 
 
-            byte[] textureData = M_Utility.TextureToTexture2D(background.texture).EncodeToJPG();
 
-            Debug.Log(player.name + "玩家将图片同步到服务器");
-
-            player.CmdUpdateCharacterPhoto(textureData, player.name);
-
-            next.Show();//显示选人画面
         }
     }
 

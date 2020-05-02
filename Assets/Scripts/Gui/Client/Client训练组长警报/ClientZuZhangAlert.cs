@@ -7,6 +7,8 @@ public class ClientZuZhangAlert : I_Image
     public ClientZuZhangAlertActiveGui clientZuZhangAlertActiveGui;
     public ClientZuZhangAlertDisableGui clientZuZhangAlertDisableGui;
 
+    public I_Text DebugText;
+
     public override void Awake()
     {
         base.Awake();
@@ -26,13 +28,16 @@ public class ClientZuZhangAlert : I_Image
     public override void Hide()
     {
         base.Hide();
-        clientZuZhangAlertActiveGui.Hide();
-        clientZuZhangAlertDisableGui.Hide();
+        //clientZuZhangAlertActiveGui.Hide();
+        //clientZuZhangAlertDisableGui.Hide();
+        DebugText.Hide();
+
     }
 
     public override void Show()
     {
         base.Show();
+        DebugText.Show();
     }
 
     public override void ShowDisableOrActiveOne(bool IsActiveState)
