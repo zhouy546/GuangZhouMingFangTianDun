@@ -9,6 +9,8 @@ public class ClientZuZhangAlert : I_Image
 
     public I_Text DebugText;
 
+    public List<int> ActiveIndex = new List<int>();
+
     public override void Awake()
     {
         base.Awake();
@@ -25,11 +27,19 @@ public class ClientZuZhangAlert : I_Image
     {
         
     }
+
+     bool IsShowZuZhangAlertGui()
+    {
+        int LockDonwIndex = GameManager.instance.getCharacterByName(GameManager.GetCurrentLocalPlayer().name).SelectID;
+        return ActiveIndex.Contains(LockDonwIndex);
+    
+    }
+
     public override void Hide()
     {
         base.Hide();
-        //clientZuZhangAlertActiveGui.Hide();
-        //clientZuZhangAlertDisableGui.Hide();
+        clientZuZhangAlertActiveGui.Hide();
+        clientZuZhangAlertDisableGui.Hide();
         DebugText.Hide();
 
     }
@@ -38,11 +48,12 @@ public class ClientZuZhangAlert : I_Image
     {
         base.Show();
         DebugText.Show();
+        ShowDisableOrActiveOne();
     }
 
-    public override void ShowDisableOrActiveOne(bool IsActiveState)
+    public override void ShowDisableOrActiveOne()
     {
-        if (IsActiveState)
+        if (IsShowZuZhangAlertGui())
         {
             clientZuZhangAlertActiveGui.Show();
             clientZuZhangAlertDisableGui.Hide();

@@ -31,7 +31,7 @@ public class I_Image : MonoBehaviour
         animator.SetBool("Show", false);
     }
 
-    public virtual void ShowDisableOrActiveOne(bool IsActiveState)
+    public virtual void ShowDisableOrActiveOne()
     {
 
     }

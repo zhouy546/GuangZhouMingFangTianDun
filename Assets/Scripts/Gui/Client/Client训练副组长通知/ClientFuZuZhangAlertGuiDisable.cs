@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClientJuMingYinDaoYuanGame : I_Image
+public class ClientFuZuZhangAlertGuiDisable : I_Image
 {
-    public I_Text debugText;
+    public I_Text DebugText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,20 +17,21 @@ public class ClientJuMingYinDaoYuanGame : I_Image
     {
 
     }
-    public override void Awake()
-    {
-        base.Awake();
-    }
-
     public override void Hide()
     {
         base.Hide();
-        debugText.Hide();
+        DebugText.Hide();
     }
 
     public override void Show()
     {
         base.Show();
-        debugText.Show();
+        DebugText.Show();
     }
+
+    public override void Awake()
+    {
+        base.Awake();
+    }
+
 }

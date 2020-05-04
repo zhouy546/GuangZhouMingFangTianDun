@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClientShuShanYinDaoYuanTongZhi : I_Image
+public class ClientYinDaoYuanGamingActive : I_Image
 {
     public I_Text debugText;
     // Start is called before the first frame update
@@ -16,6 +16,7 @@ public class ClientShuShanYinDaoYuanTongZhi : I_Image
     {
 
     }
+
     public override void Awake()
     {
         base.Awake();
@@ -31,5 +32,6 @@ public class ClientShuShanYinDaoYuanTongZhi : I_Image
     {
         base.Show();
         debugText.Show();
+
     }
 }
