@@ -5,6 +5,11 @@ using UnityEngine;
 public class ClientCancelAlert : I_Image
 {
     public I_Text debugText;
+
+    public ClientZuZhangReleaseAlertActiveGui clientZuZhangReleaseAlertActiveGui;
+    public ClientZuZhangReleaseAlertDisableGui clientZuZhangReleaseAlertDisableGui;
+
+    public List<int> ActiveIndex = new List<int>();
     // Start is called before the first frame update
     void Start()
     {
@@ -16,20 +21,40 @@ public class ClientCancelAlert : I_Image
     {
 
     }
-    public override void Awake()
+    bool IsShow()
     {
-        base.Awake();
+        int LockDonwIndex = GameManager.instance.getCharacterByName(GameManager.GetCurrentLocalPlayer().name).SelectID;
+        return ActiveIndex.Contains(LockDonwIndex);
+
     }
 
     public override void Hide()
     {
         base.Hide();
+        clientZuZhangReleaseAlertActiveGui.Hide();
+        clientZuZhangReleaseAlertDisableGui.Hide();
         debugText.Hide();
+
     }
 
     public override void Show()
     {
         base.Show();
         debugText.Show();
+        ShowDisableOrActiveOne();
+    }
+
+    public override void ShowDisableOrActiveOne()
+    {
+        if (IsShow())
+        {
+            clientZuZhangReleaseAlertActiveGui.Show();
+            clientZuZhangReleaseAlertDisableGui.Hide();
+        }
+        else
+        {
+            clientZuZhangReleaseAlertActiveGui.Hide();
+            clientZuZhangReleaseAlertDisableGui.Show();
+        }
     }
 }

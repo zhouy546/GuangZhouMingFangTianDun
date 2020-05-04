@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClientYinDaoYuanGamingActive : I_Image
+public class ClientHouQingBaseGameActive : I_Image
 {
     public I_Text debugText;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +34,4 @@ public class ClientYinDaoYuanGamingActive : I_Image
         debugText.Show();
 
     }
-
-
-
 }
