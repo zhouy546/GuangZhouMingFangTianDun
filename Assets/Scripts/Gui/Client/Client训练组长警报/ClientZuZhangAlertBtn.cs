@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClientCharacterIntro : I_Image
+public class ClientZuZhangAlertBtn : I_Image
 {
-    public I_Text DebugText;
+    public I_Text BoardCaseText;
 
-    // Start is called before the first frame update
     void Start()
     {
 
@@ -23,17 +22,18 @@ public class ClientCharacterIntro : I_Image
         base.Awake();
     }
 
-    public override void Show()
-    {
-        base.Show();
-        DebugText.Show();
-    }
-
     public override void Hide()
     {
         base.Hide();
-        DebugText.Hide();
+        image.raycastTarget = false;
+        BoardCaseText.Hide();
     }
 
+    public override void Show()
+    {
+        base.Show();
+        image.raycastTarget = true;
+        BoardCaseText.Show();
 
+    }
 }

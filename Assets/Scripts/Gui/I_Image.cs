@@ -35,4 +35,9 @@ public class I_Image : MonoBehaviour
     {
 
     }
+
+    public virtual void SetTick()
+    {
+
+    }
 }
