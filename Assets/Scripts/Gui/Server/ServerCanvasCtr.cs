@@ -70,6 +70,23 @@ public class ServerCanvasCtr : MonoBehaviour
                 GameState_ServerGui_kP[item.Key].Hide();
             }
         }
+
+
+        if(_gameState== GameState.角色介绍)
+        {
+            MapAlertCtr.instance.PlayGroundVideo();
+        }
+
+        if (_gameState == GameState.训练前情提要)
+        {
+            MapAlertCtr.instance.Show();
+            MapAlertCtr.instance.StopGroundVideo();
+        }
+
+        if(_gameState == GameState.训练解除警报)
+        {
+            MapAlertCtr.instance.Hide();
+        }
     }
 
 

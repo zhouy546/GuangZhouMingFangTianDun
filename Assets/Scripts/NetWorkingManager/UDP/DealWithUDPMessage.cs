@@ -162,6 +162,8 @@ public class DealWithUDPMessage : NetworkBehaviour
         ServerQA.instance.ResetQA();
 
         EventCenter.Broadcast(EventDefine.Stop);
+
+        MapAlertCtr.instance.StopGroundVideo();
     }
 
 
