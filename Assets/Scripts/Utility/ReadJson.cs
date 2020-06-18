@@ -41,12 +41,21 @@ public class ReadJson : MonoBehaviour {
             instance = this;
 
         }
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+
+
+#if UNITY_EDITOR
+    //   yield return StartCoroutine(iosReadJson());
+
+     //   yield return StartCoroutine(readJson());
+
+        ReadIosXml();
+#endif
+
+#if UNITY_STANDALONE_WIN
         yield return StartCoroutine(iosReadJson());
 
         yield return StartCoroutine(readJson());
 
-        ReadIosXml();
 #endif
 
 
@@ -56,6 +65,8 @@ public class ReadJson : MonoBehaviour {
 #endif
 
         yield return new WaitForSeconds(0.1f);
+        EventCenter.Broadcast(EventDefine.INI);
+
     }
 
     public void ReadIosXml() {
@@ -190,7 +201,6 @@ public class ReadJson : MonoBehaviour {
         GameManager.StopUdp = itemDate["Setup"]["Stop"].ToString();
 
 
-        EventCenter.Broadcast(EventDefine.INI);
 
     }
 

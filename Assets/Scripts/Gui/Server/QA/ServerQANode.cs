@@ -115,13 +115,14 @@ public class ServerQANode : I_Image
             }
             else
             {
+                Hide();
                 //最后结算所有玩家最高分，并且显示
                 ServerQAScoreboard.instance.Show();
                 topPlayer = getTopPlayerScore();
                 string s="";
                 foreach (var item in topPlayer)
                 {
-                    s =s+ item + "\n";
+                    s =s+ item + "&";
                 }
                 ServerQAScoreboard.instance.SetText(s);
 

@@ -7,7 +7,10 @@ public class ServerQAScoreboard : MonoBehaviour
 {
 
     public static ServerQAScoreboard instance;
-    public Text m_text;
+
+    public List<ServerQAUnit> serverQANodes = new List<ServerQAUnit>();
+
+    public   GameObject Graph;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -28,17 +31,27 @@ public class ServerQAScoreboard : MonoBehaviour
 
     public void Show()
     {
-        m_text.color = new Color(255f, 255f, 255f, 255f);
+        Graph.SetActive(true);
     }
 
     public void Hide()
     {
-        m_text.color = new Color(255f, 255f, 255f, 0f);
-
+        Graph.SetActive(false);
     }
 
     public void SetText(string s)
     {
-        m_text.text = s;
+
+        Debug.Log(s);
+       string[] temp1= s.Split('&');
+
+        foreach (var item in serverQANodes)
+        {
+            int i =   serverQANodes.IndexOf(item);
+
+            string[] temp2 = temp1[i].Split('_');
+
+            item.SetText(temp2[0], temp2[1]);
+        }
     }
 }

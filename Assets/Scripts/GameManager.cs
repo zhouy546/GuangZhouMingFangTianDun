@@ -9,9 +9,9 @@ public class GameManager : NetworkBehaviour
 
     public static string ServerIp;
 
-    public static int ServerUDPPort;
+    public static int ServerUDPPort=29010;
 
-    public static int ServerGamePort;
+    public static int ServerGamePort=7777;
 
 
 
@@ -26,7 +26,7 @@ public class GameManager : NetworkBehaviour
 
     public static int ScreenHeight;
 
-    public static bool M_isServer;
+    public static bool M_isServer = false;
 
     public static string VolumeUpUDP;
 
@@ -40,7 +40,7 @@ public class GameManager : NetworkBehaviour
 
     public static Dictionary<int, QAinfo> kp_id_qAinfos = new Dictionary<int, QAinfo>();
 
-    public static  int MAX_XUN_LIAN_STATE = 14;
+    public static  int MAX_XUN_LIAN_STATE = 13;
 
     public static GameManager instance;
 
