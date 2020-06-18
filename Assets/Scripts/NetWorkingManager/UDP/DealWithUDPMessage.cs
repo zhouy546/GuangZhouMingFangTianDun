@@ -47,27 +47,68 @@ public class DealWithUDPMessage : NetworkBehaviour
             if (dataTest == "1000")
             {
                 GameManager.GetServerPlayer().Istick = false;
-
+                ResetSyncVal(GameState.默认界面);
                 PlayerChangeState(GameState.角色介绍);
 
             }
-            else if (dataTest == "1001")
+            else if (GameManager.kp_udp_VideoInfo.ContainsKey(dataTest))
             {
-                //PlayerChangeState(State.YanXunState);
-                //GameManager.GetServerPlayer().SetServerYanYunState(YanYun.PlayerSelectCharacterState);
+                ResetSyncVal(GameState.默认界面);
+                PlayerChangeState(GameState.默认界面);
+
+                EventCenter.Broadcast<string>(EventDefine.PlayMainVideo, dataTest);
+
 
             }
             else if (dataTest == "1002")
             {
-                //PlayerChangeState(State.QAState);
+                ResetSyncVal(GameState.默认界面);
+                PlayerChangeState(GameState.问答);
             }
             else if (dataTest == "1003")
             {
+                ResetSyncVal(GameState.默认界面);
                 PlayerChangeState(GameState.默认界面);
+            }
+
+            else if (dataTest == GameManager.VolumeDownUDP)
+            {
+                EventCenter.Broadcast(EventDefine.VolumeUp);
+            }
+
+            else if (dataTest == GameManager.VolumeUpUDP) {
+                EventCenter.Broadcast(EventDefine.VolumeDown);
+            }
+
+            else if (dataTest == GameManager.StopUdp)
+            {
+                EventCenter.Broadcast(EventDefine.Stop);
+            }
+
+                char first = dataTest[0];
+
+            if (first == '#')
+            {
+                string tempA = dataTest.Trim('#');
+                int seatID = int.Parse(dealwithAnswer(tempA)[0]);
+                string  Answer = dealwithAnswer(tempA)[1];
+                GameManager.kp_seatID_Answer[seatID].setCurrentAnswer(Answer);
+
             }
         }
 
     }
+
+
+    private string[] dealwithAnswer(string s) {
+        string[] temp = new string[2];
+
+        temp=s.Split('_');
+
+        return temp;
+    }
+
+
     [Server]
     public void PlayerChangeState(GameState _gameStates)
     {
@@ -100,6 +141,29 @@ public class DealWithUDPMessage : NetworkBehaviour
 
         //Debug.Log("数据：" + dataTest);  
     }
+
+
+
+    public void ResetSyncVal(GameState _gameState)
+    {
+        foreach (var item in GameManager.players)
+        {
+            GameManager.instance.SetCharacterLockedVal(item.Key, false);
+            GameManager.instance.SetCharacterSelectIDVal(item.Key, -1);
+            GameManager.instance.SetCharacterStateVal(item.Key, _gameState);
+        }
+
+       GameManager.GetServerPlayer().CmdServerPlayerResetChange();
+
+        GameManager.instance.tick.ResetEvent();
+
+        ServerMediaCtr.instance.StopVideo();
+
+        ServerQA.instance.ResetQA();
+
+        EventCenter.Broadcast(EventDefine.Stop);
+    }
+
 
     
 

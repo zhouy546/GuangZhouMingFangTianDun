@@ -5,6 +5,8 @@ using UnityEngine;
 public class ClientZhiAnBaseGameActive : I_Image
 {
     public I_Text debugText;
+
+    public GameObject[] graphs_gameObject;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,12 +28,21 @@ public class ClientZhiAnBaseGameActive : I_Image
     {
         base.Hide();
         debugText.Hide();
+
+        foreach (var item in graphs_gameObject)
+        {
+            item.SetActive(false);
+
+        }
     }
 
     public override void Show()
     {
         base.Show();
         debugText.Show();
-
+        foreach (var item in graphs_gameObject)
+        {
+            item.SetActive(true);
+        }
     }
 }

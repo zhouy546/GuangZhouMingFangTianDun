@@ -4,13 +4,49 @@ using UnityEngine;
 using UnityEngine.Networking;
 public class GameManager : NetworkBehaviour
 {
+    //client----
+    public static int PADID;
+
+    public static string ServerIp;
+
+    public static int ServerUDPPort;
+
+    public static int ServerGamePort;
+
+
+
+    //-------Server--
+    public static string ProgramName;
+
+    public static int Xpos;
+
+    public static int Ypos;
+
+    public static int ScreenWidth;
+
+    public static int ScreenHeight;
+
+    public static bool M_isServer;
+
+    public static string VolumeUpUDP;
+
+    public static string VolumeDownUDP;
+
+    public static string StopUdp;
+
+    public static Dictionary<string, VideoInfo> kp_udp_VideoInfo = new Dictionary<string, VideoInfo>();
+
+    public static Dictionary<int, playerQAScore> kp_seatID_Answer = new Dictionary<int, playerQAScore>();
+
+    public static Dictionary<int, QAinfo> kp_id_qAinfos = new Dictionary<int, QAinfo>();
+
     public static  int MAX_XUN_LIAN_STATE = 14;
 
     public static GameManager instance;
 
     private const string PLAYER_ID_PREFIX = "Player";
 
-    public static Dictionary<int, GameState> SelectID_ActiveState_KP = new Dictionary<int, GameState>();
+ //   public static Dictionary<int, GameState> SelectID_ActiveState_KP = new Dictionary<int, GameState>();
 
     public static Dictionary<string, Player> players = new Dictionary<string, Player>();
 
@@ -149,8 +185,13 @@ public class GameManager : NetworkBehaviour
     }
     public void Awake()
     {
-        SelectID_ActiveState_KP.Add(0, GameState.训练演习组长预先报警);
-        SelectID_ActiveState_KP.Add(1, GameState.训练演习副组长通知各人员就位);
+        for (int i = 0; i < 50; i++)
+        {
+
+            playerQAScore tempQAscore = new playerQAScore(0, "F");
+
+            kp_seatID_Answer.Add(i, tempQAscore);
+        }
     }
 
     public void OnEnable()
@@ -218,6 +259,81 @@ public class GameManager : NetworkBehaviour
     
 
 }
+
+
+public class VideoInfo
+{
+    public string url;
+    public string udp;
+    public bool isLoop;
+    public bool isBackToScreenProtect;
+    public bool isScreenProtect;
+
+    public VideoInfo()
+    {
+
+    }
+
+    public VideoInfo(string _url, string _udp,bool _isLoop,bool _isBackToScreenProtect,bool _isScreenProtect)
+    {
+      url=_url;
+      udp=_udp;
+      isLoop=_isLoop;
+      isBackToScreenProtect = _isBackToScreenProtect;
+      isScreenProtect=_isScreenProtect;
+    }
+}
+
+public class QAinfo {
+    public int num;
+    public string question;
+    public string[] A1;
+    public int RightAnswer;
+
+    public QAinfo() {
+
+    }
+
+    public QAinfo( int _num, string _question, string[] _A1, int _RightAnswer) {
+        num = _num;
+        question = _question;
+        A1 = _A1;
+        RightAnswer = _RightAnswer;
+    }
+}
+
+public class playerQAScore
+{
+    public int currentScore;
+    public string currentSelectAnswer;
+
+    public playerQAScore()
+    {
+
+    }
+
+    public playerQAScore( int _currentScore, string _currentSelectAnswer) {
+        currentScore = _currentScore;
+        currentSelectAnswer = _currentSelectAnswer;
+    }
+
+    public void reset()
+    {
+        currentScore = 0;
+        currentSelectAnswer = "F";
+    }
+
+    public void GainScore()
+    {
+        currentScore++;
+    }
+
+    public void setCurrentAnswer(string s)
+    {
+        currentSelectAnswer = s;
+    }
+}
+
 
 public enum GameState {默认界面,播放视频,问答,角色介绍,
     训练演习选人, 训练前情提要,训练演习组长预先报警,训练演习显示组长广播内容, 训练演习副组长通知各人员就位

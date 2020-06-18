@@ -5,6 +5,8 @@ using UnityEngine;
 public class ClientHouQingBaseGameActive : I_Image
 {
     public I_Text debugText;
+
+    public GameObject[] gameobjectGraphs;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,12 +28,25 @@ public class ClientHouQingBaseGameActive : I_Image
     {
         base.Hide();
         debugText.Hide();
+
+        foreach (var item in gameobjectGraphs)
+        {
+            item.SetActive(false);
+        }
     }
 
     public override void Show()
     {
         base.Show();
         debugText.Show();
+        gameobjectGraphs[0].SetActive(true);
+    }
+
+    public void ShowStage2()
+    {
+        gameobjectGraphs[0].SetActive(false);
+
+        gameobjectGraphs[1].SetActive(true);
 
     }
 }

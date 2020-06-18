@@ -10,6 +10,11 @@ public class ClientSelect : I_Image
     public int LockDownID = -1;
 
     public List<Button> CharacterBtns = new List<Button>();
+
+    public Sprite defaultBtnSprite;
+    public Sprite WaitingBtnSprite;
+
+    public Button SelectionBtn;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,12 +36,18 @@ public class ClientSelect : I_Image
     {
         base.Hide();
         SubUI.SetActive(false);
+
+
+
     }
 
     public override void Show()
     {
         base.Show();
         SubUI.SetActive(true);
+        SelectionBtn.GetComponent<Image>().sprite = defaultBtnSprite;
+
+
     }
 
     public void PeopleLockedDown()
@@ -74,8 +85,13 @@ public class ClientSelect : I_Image
         {
             return;
         }
+
+
+
         Debug.Log("客户端按钮ID" + LockDownID);
         player.CmdTryLockDownPeople(LockDownID, player.name);
+
+        SelectionBtn.GetComponent<Image>().sprite = WaitingBtnSprite;
     }
 
     public void LockCharacterGui(int id)
@@ -83,8 +99,9 @@ public class ClientSelect : I_Image
         CharacterBtns[id].interactable = false;
     }
 
+    //即将替换成Btn下的MASK下的图片
     public void SetPlayerPhoto(int id, Sprite sprite)
     {
-        CharacterBtns[id].GetComponent<Image>().sprite = sprite;
+        CharacterBtns[id].GetComponent<ClientSelectBtn>().CharacterSprite.sprite = sprite;
     }
 }

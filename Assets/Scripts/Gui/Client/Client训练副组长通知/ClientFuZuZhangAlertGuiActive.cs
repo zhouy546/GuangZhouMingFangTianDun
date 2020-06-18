@@ -6,7 +6,7 @@ public class ClientFuZuZhangAlertGuiActive : I_Image
 {
     public I_Text DebugText;
 
-
+    public I_Image FuZuZhangBtn;
 
     // Start is called before the first frame update
     void Start()
@@ -23,12 +23,14 @@ public class ClientFuZuZhangAlertGuiActive : I_Image
     {
         base.Hide();
         DebugText.Hide();
+        FuZuZhangBtn.Hide();
     }
 
     public override void Show()
     {
         base.Show();
         DebugText.Show();
+        FuZuZhangBtn.Show();
     }
 
     public override void Awake()

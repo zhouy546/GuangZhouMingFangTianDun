@@ -12,6 +12,9 @@ public class ClientCanvasCtr : MonoBehaviour
     // Start is called before the first frame update
     List<GameState> XunLiangameStates = new List<GameState>();
 
+
+    public ClientQA clientQA;
+
     void Start()
     {
         if (instance == null)
@@ -41,7 +44,7 @@ public class ClientCanvasCtr : MonoBehaviour
         GameState_ClientGui_kP.Add(GameState.训练消除空袭后果, ClintGui[13]);
         GameState_ClientGui_kP.Add(GameState.训练总结, ClintGui[14]);
 
-
+        GameState_ClientGui_kP.Add(GameState.问答, ClintGui[15]);
 
 
         HideAll();
@@ -61,6 +64,15 @@ public class ClientCanvasCtr : MonoBehaviour
             GameState_ClientGui_kP[item.Key].Hide();
 
         }
+    }
+
+
+    public void RestQAbtn() {
+        clientQA.resetbtn();
+    }
+
+    public void ResetClientCanvas() {
+        ClientPeopleSelectionGui.instance.ResetAll();
     }
 
     public void Show(GameState _gameState)

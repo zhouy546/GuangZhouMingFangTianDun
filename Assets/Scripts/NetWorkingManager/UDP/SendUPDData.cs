@@ -13,12 +13,8 @@ public class SendUPDData : MonoBehaviour {
 
     public static SendUPDData instance;
 
-    public string udpData_str;
-    string _sSend = "";
-
-    [Tooltip("接受端口号")] public int m_ReceivePort = 29010;//接收的端口号 
     Socket udpserver = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-    private string m_ip = "192.168.1.10";//定义一个IP地址
+
 
     public bool udp_Send(string da, string ip, int port)
     {
@@ -38,11 +34,6 @@ public class SendUPDData : MonoBehaviour {
         }
     }
 
-    public void setToLocal(string data)
-    {
-        udp_Send(data,"127.0.0.1", 29010);
-    }
-   
 
     // Use this for initialization
     void Start()
@@ -54,7 +45,8 @@ public class SendUPDData : MonoBehaviour {
         if (instance == null)
         {
             instance = this;
-        }    }
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -75,10 +67,4 @@ public class SendUPDData : MonoBehaviour {
 
 
 
-    string CreateMessage() {
-
-        string str = "stop";
-          return str;
-
-    }
 }

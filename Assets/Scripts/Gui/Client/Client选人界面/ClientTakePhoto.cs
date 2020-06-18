@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class ClientTakePhoto : I_Image
 {
+
+    public Texture defaultSprite;
     private bool camAvailable;
     private WebCamTexture frontcam;
     private Texture defaultBackground;
@@ -13,19 +15,38 @@ public class ClientTakePhoto : I_Image
     public AspectRatioFitter fit;
 
     public Button OpenCameraBtn;
-    public Button CloseCameraBtn;
+    //public Button CloseCameraBtn;
 
     public I_Image next;
+
+    public GameObject[] Gameobjectsprites;
+
+    public int ClickTime =0;
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("初始化摄像机按钮");
 
             Debug.Log("添加摄像机按钮事件");
-            OpenCameraBtn.onClick.AddListener(initializedCam);
-            CloseCameraBtn.onClick.AddListener(TurnOffCam);
+            OpenCameraBtn.onClick.AddListener(Listener);
+
 
     }
+
+
+    public void Listener() {
+        if (ClickTime == 0)
+        {
+            initializedCam();
+
+        }else if (ClickTime == 1)
+        {
+            TurnOffCam();
+        }
+
+        ClickTime++;
+    }
+
 
 
     public void initializedCam()
@@ -92,14 +113,24 @@ public class ClientTakePhoto : I_Image
         }
     }
 
-
+    private void resetUI()
+    {
+        ClickTime = 0;
+        background.texture = defaultSprite;
+    }
 
     public override void Hide()
     {
         base.Hide();
         OpenCameraBtn.gameObject.SetActive(false);
-        CloseCameraBtn.gameObject.SetActive(false);
         background.gameObject.SetActive(false);
+
+        foreach (var item in Gameobjectsprites)
+        {
+            item.SetActive(false);
+        }
+
+        resetUI();
     }
 
     public override void Show()
@@ -108,7 +139,13 @@ public class ClientTakePhoto : I_Image
         background.gameObject.SetActive(true);
 
         OpenCameraBtn.gameObject.SetActive(true);
-        CloseCameraBtn.gameObject.SetActive(true);
+
+        foreach (var item in Gameobjectsprites)
+        {
+            item.SetActive(true);
+        }
+
+        resetUI();
     }
 
     public override void Awake()

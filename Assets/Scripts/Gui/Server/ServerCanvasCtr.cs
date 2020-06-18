@@ -19,6 +19,8 @@ public class ServerCanvasCtr : MonoBehaviour
             instance = this;
         }
 
+        //Debug.Log("\\0");
+
         GameState_ServerGui_kP.Add(GameState.默认界面, ServerGui[0]);
         GameState_ServerGui_kP.Add(GameState.角色介绍, ServerGui[1]);
         GameState_ServerGui_kP.Add(GameState.训练演习选人, ServerGui[2]);
@@ -34,6 +36,7 @@ public class ServerCanvasCtr : MonoBehaviour
         GameState_ServerGui_kP.Add(GameState.训练解除警报, ServerGui[12]);
         GameState_ServerGui_kP.Add(GameState.训练消除空袭后果, ServerGui[13]);
         GameState_ServerGui_kP.Add(GameState.训练总结, ServerGui[14]);
+        GameState_ServerGui_kP.Add(GameState.问答, ServerGui[15]);
         HideAll();
 
     }

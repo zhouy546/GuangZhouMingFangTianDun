@@ -120,7 +120,12 @@ public class Player : NetworkBehaviour
     public void ServerSetState(GameState _gameStates)
     {
 
-//        GameManager.instance.SetAllCharacterStateVal(_gameStates);
+        if (_gameStates == GameState.问答)
+        {//问答
+            Debug.Log("Server 跳转问答");
+        }
+
+        //        GameManager.instance.SetAllCharacterStateVal(_gameStates);
 
         if (_gameStates==GameState.角色介绍)
         {
@@ -162,6 +167,13 @@ public class Player : NetworkBehaviour
             ClientCanvasCtr.instance.Show(STATE);
         }
 
+
+    }
+    [ClientRpc]
+    public void RpcResetLocalPlayerQAbtn()
+    {
+        //由player3 服务器在客户端上的玩家来给客户端同步UI;
+            ClientCanvasCtr.instance.RestQAbtn();
 
     }
 
@@ -248,6 +260,21 @@ public class Player : NetworkBehaviour
         clientPeopleSelectionGui.clientSelect.LockCharacterGui(id);
 
     }
+
+
+    [Command]
+    public void CmdServerPlayerResetChange()
+    {
+        ServerPeopleSelectionGui.instance.ResetMe();
+        RpcClientCanvasReset();
+    }
+
+    [ClientRpc]
+    public void RpcClientCanvasReset()
+    {
+        ClientCanvasCtr.instance.ResetClientCanvas();
+    }
+
 }
 [System.Serializable]
 public class LinkedListYanXiState
@@ -292,11 +319,5 @@ public class LinkedListYanXiState
 
             GameManager.instance.tick.RegisterfinishCountDownEventr(next.ServerSetState);
         }
-
-
-
-
-
-
     }
 }

@@ -40,4 +40,13 @@ public class I_Image : MonoBehaviour
     {
 
     }
+
+    public virtual void setVideoUrl(string s)
+    {
+
+    }
+
+    public virtual void PlayVideo() {
+
+    }
 }

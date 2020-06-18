@@ -6,6 +6,8 @@ public class ClientZuZhangReleaseAlertActiveGui : I_Image
 {
     public I_Text debugText;
     // Start is called before the first frame update
+
+    public GameObject subGraph;
     void Start()
     {
         
@@ -26,12 +28,16 @@ public class ClientZuZhangReleaseAlertActiveGui : I_Image
     {
         base.Hide();
         debugText.Hide();
+        subGraph.SetActive(false);
     }
 
     public override void Show()
     {
         base.Show();
         debugText.Show();
+        subGraph.SetActive(true);
 
     }
+
+
 }

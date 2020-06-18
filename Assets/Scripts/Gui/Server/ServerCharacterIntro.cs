@@ -7,6 +7,10 @@ public class ServerCharacterIntro : I_Image
     public I_Text DebugText;
 
     public int TickTime;
+
+
+   
+    public string videoUrl;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,12 +33,15 @@ public class ServerCharacterIntro : I_Image
         base.Show();
         DebugText.Show();
         SetTick();
+        
+        PlayVideo();
     }
 
     public override void Hide()
     {
         base.Hide();
         DebugText.Hide();
+
     }
 
     public override void SetTick()
@@ -45,6 +52,25 @@ public class ServerCharacterIntro : I_Image
 
             tick.DefaultCountDonwTime = TickTime;
             tick.CurrentCountDonwTime = TickTime;
+        }
+    }
+
+    public override void setVideoUrl(string s)
+    {
+        videoUrl = s;
+    }
+
+    public override void PlayVideo()
+    {
+        Debug.Log("Running");
+        if (videoUrl != "")
+        {
+            ServerMediaCtr.instance.SetVideoColorAlpha(255f);
+            ServerMediaCtr.instance.PlayVideo(videoUrl);
+        }
+        else
+        {
+            ServerMediaCtr.instance.SetVideoColorAlpha(0f);
         }
     }
 

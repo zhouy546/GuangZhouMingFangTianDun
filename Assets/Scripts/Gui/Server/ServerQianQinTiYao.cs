@@ -5,6 +5,10 @@ using UnityEngine;
 public class ServerQianQinTiYao : I_Image
 {
    public I_Text debugText;
+
+    public int TickTime;
+
+    public string videoUrl;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,11 +29,41 @@ public class ServerQianQinTiYao : I_Image
     {
         base.Hide();
         debugText.Hide();
+
     }
 
     public override void Show()
     {
+        Debug.Log(this.name);
         base.Show();
         debugText.Show();
+        SetTick();
+        PlayVideo();
     }
+
+    public override void SetTick()
+    {
+        if (GameManager.GetServerPlayer().isLocalPlayer)
+        {
+            Tick tick = GameManager.instance.GetComponent<Tick>();
+
+            tick.DefaultCountDonwTime = TickTime;
+            tick.CurrentCountDonwTime = TickTime;
+        }
+    }
+
+    public override void PlayVideo()
+    {
+        if (videoUrl != "")
+        {
+            ServerMediaCtr.instance.SetVideoColorAlpha(255f);
+            ServerMediaCtr.instance.PlayVideo(videoUrl);
+        }
+        else
+        {
+            ServerMediaCtr.instance.SetVideoColorAlpha(0f);
+        }
+    }
+
+
 }

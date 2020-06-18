@@ -51,4 +51,36 @@ public static class M_Utility
         Sprite s = Sprite.Create(tex2, new Rect(0, 0, tex2.width, tex2.height), Vector2.zero);
         return s;
     }
+    /// <summary>
+    /// 在一个范围内随机几个不重复的数值
+    /// </summary>
+    /// <param name="min">从多少开始</param>
+    /// <param name="Max">结束数值是多少</param>
+    /// <param name="count">取得几个数值</param>
+    /// <returns></returns>
+    public static List<int> GetRandom(int min, int Max, int count)
+    {
+        List<int> temp = new List<int>();
+        List<int> temp1 = new List<int>();
+
+        for (int i = min; i < Max+1; i++)
+        {
+            temp.Add(i);
+        }
+
+        if (Max + 1 - min < count)
+        {
+            return temp;
+        }
+        else
+        {
+            while(temp1.Count< count)
+            {
+               int tempi =  Mathf.FloorToInt(Random.Range(0, temp.Count));
+                temp1.Add(temp[tempi]);
+                temp.Remove(temp[tempi]);
+            }
+            return temp1;
+        }
+    }
 }

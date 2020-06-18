@@ -5,6 +5,8 @@ using UnityEngine;
 public class ServerZuZhangAlertInformationGui : I_Image
 {
     public I_Text debugText;
+
+    public int TickTime;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,5 +34,18 @@ public class ServerZuZhangAlertInformationGui : I_Image
     {
         base.Show();
         debugText.Show();
+
+        SetTick();
+    }
+
+    public override void SetTick()
+    {
+        if (GameManager.GetServerPlayer().isLocalPlayer)
+        {
+            Tick tick = GameManager.instance.GetComponent<Tick>();
+
+            tick.DefaultCountDonwTime = TickTime;
+            tick.CurrentCountDonwTime = TickTime;
+        }
     }
 }

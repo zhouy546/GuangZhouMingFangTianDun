@@ -5,6 +5,8 @@ using UnityEngine;
 public class ClientShuShanYinDaoYuanTongZhiActive : I_Image
 {
     public I_Text debugText;
+    public I_Image YDYBtn;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,11 +27,13 @@ public class ClientShuShanYinDaoYuanTongZhiActive : I_Image
     {
         base.Hide();
         debugText.Hide();
+        YDYBtn.Hide();
     }
 
     public override void Show()
     {
         base.Show();
         debugText.Show();
+        YDYBtn.Show();
     }
 }

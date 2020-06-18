@@ -7,11 +7,11 @@ public class NetWorkingCtr : NetworkBehaviour
 {
     public NetworkManager networkManager;
 
-    public bool M_ISERVER;
+    public bool M_ISERVER = true;
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine( ini());
+        EventCenter.AddListener(EventDefine.INI, ini);
     }
 
     // Update is called once per frame
@@ -20,17 +20,18 @@ public class NetWorkingCtr : NetworkBehaviour
         
     }
 
-    public IEnumerator ini() {
+    public void ini() {
 
-        yield return new WaitForSeconds(1f);
-        //if (M_ISERVER)
-        //{
-        //    networkManager.StartHost();
-        //}
-        //else
-        //{
-        //    networkManager.StartClient();
-        //}
+        if (GameManager.M_isServer)
+        {
+
+            networkManager.StartHost();
+        }
+        else
+        {
+            networkManager.networkAddress = GameManager.ServerIp;
+            networkManager.StartClient();
+        }
     }
 
     public override void OnStartServer()

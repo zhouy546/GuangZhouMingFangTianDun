@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,14 +42,11 @@ public class Tick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enableKeyBoardDebug) {
-            if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (GameManager.GetCurrentLocalPlayer().isServer)
             {
-                Func_StartCountDonw();
-            }
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                Func_StopCountDonw();
+                CurrentCountDonwTime = 1f;
             }
         }
     }
@@ -119,6 +117,22 @@ public class Tick : MonoBehaviour
     }
 
 
+    public void ResetEvent()
+    {
+        CLearAllEvent();
+    }
 
+    public void CLearAllEvent()
+    {
+        if (finishCountDownEvent == null) return;
+        Delegate[] dels = finishCountDownEvent.GetInvocationList();
+        foreach (Delegate del in dels)
+        {
+            object delObj = del.GetType().GetProperty("Method").GetValue(del, null);
+            string funcName = (string)delObj.GetType().GetProperty("Name").GetValue(delObj, null);////方法名
+            Debug.Log(funcName);
+            finishCountDownEvent -= del as FinishCountDown;
+        }
+    }
 
 }
