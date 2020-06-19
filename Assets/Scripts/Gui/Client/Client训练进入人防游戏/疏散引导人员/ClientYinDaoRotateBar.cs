@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-public class ClientYinDaoRotateBar : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragHandler
+public class ClientYinDaoRotateBar : MonoBehaviour,IDragHandler,IEndDragHandler,IPointerClickHandler
 {
 
     private Vector2 BeginPoint;
@@ -15,10 +15,14 @@ public class ClientYinDaoRotateBar : MonoBehaviour,IDragHandler,IBeginDragHandle
     private float val;
 
     public Image m_Image;
-    public void OnBeginDrag(PointerEventData eventData)
+
+    public void OnPointerClick(PointerEventData eventData)
     {
         BeginPoint = eventData.position;
     }
+    //public void OnBeginDrag(PointerEventData eventData)
+    //{
+    //}
 
     public void OnDrag(PointerEventData eventData)
     {
@@ -26,7 +30,7 @@ public class ClientYinDaoRotateBar : MonoBehaviour,IDragHandler,IBeginDragHandle
 
         dis = currentPoit.x - BeginPoint.x;
 
-         tempval = dis * 0.05f;
+         tempval = dis * 0.5f;
 
         Debug.Log(tempval);
 
@@ -44,6 +48,8 @@ public class ClientYinDaoRotateBar : MonoBehaviour,IDragHandler,IBeginDragHandle
             m_Image.color = Color.gray;
             m_Image.raycastTarget = false;
         }
+
+        BeginPoint = new Vector2(0, 0);
     }
 
     public void OnEnable()
@@ -69,4 +75,6 @@ public class ClientYinDaoRotateBar : MonoBehaviour,IDragHandler,IBeginDragHandle
     {
         
     }
+
+
 }

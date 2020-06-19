@@ -5,9 +5,9 @@ using UnityEngine.Networking;
 public class GameManager : NetworkBehaviour
 {
     //client----
-    public static int PADID;
+    public static int PADID=0;
 
-    public static string ServerIp;
+    public static string ServerIp = "192.168.1.50";
 
     public static int ServerUDPPort=29010;
 
