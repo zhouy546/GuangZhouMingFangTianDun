@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ClientYinDaoYuanBaseGameActive : I_Image
 {
-    public I_Text debugText;
+//public I_Text debugText;
 
     public GameObject[] SubgameObjects = new GameObject[2];
     // Start is called before the first frame update
@@ -27,7 +27,7 @@ public class ClientYinDaoYuanBaseGameActive : I_Image
     public override void Hide()
     {
         base.Hide();
-        debugText.Hide();
+        //debugText.Hide();
 
         foreach (var item in SubgameObjects)
         {
@@ -38,7 +38,7 @@ public class ClientYinDaoYuanBaseGameActive : I_Image
     public override void Show()
     {
         base.Show();
-        debugText.Show();
+     //  debugText.Show();
         foreach (var item in SubgameObjects)
         {
             item.SetActive(true);
