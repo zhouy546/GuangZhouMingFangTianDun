@@ -15,6 +15,8 @@ public class ClientCanvasCtr : MonoBehaviour
 
     public ClientQA clientQA;
 
+
+    public GameObject ClientBg;
     void Start()
     {
         if (instance == null)
@@ -48,6 +50,8 @@ public class ClientCanvasCtr : MonoBehaviour
 
 
         HideAll();
+
+        StartCoroutine(SetClientBG());
     }
 
     // Update is called once per frame
@@ -55,6 +59,23 @@ public class ClientCanvasCtr : MonoBehaviour
     {
         
     }
+
+
+    IEnumerator SetClientBG()
+    {
+        yield return new WaitForSeconds(2);
+
+        Debug.Log(GameManager.M_isServer);
+        if (GameManager.M_isServer)
+        {
+            ClientBg.SetActive(false);
+        }
+        else
+        {
+            ClientBg.SetActive(true);
+
+        }
+    } 
 
     public void HideAll()
     {

@@ -27,7 +27,7 @@ public class getCurrentWorldTime : MonoBehaviour
 
         text.text = time;
 
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(1f);
 
         StartCoroutine(UpdateTime());
     }
@@ -35,9 +35,10 @@ public class getCurrentWorldTime : MonoBehaviour
 
     public string GetIme()
     {
-   string hour =      DateTime.Now.Hour.ToString();
- string Minute =   DateTime.Now.Minute.ToString();
 
-        return hour + " : " + Minute;
+
+
+        return DateTime.Now.ToString();
+
     }
 }

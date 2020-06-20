@@ -40,7 +40,7 @@ public class GameManager : NetworkBehaviour
 
     public static Dictionary<int, QAinfo> kp_id_qAinfos = new Dictionary<int, QAinfo>();
 
-    public static  int MAX_XUN_LIAN_STATE = 13;
+    public static  int MAX_XUN_LIAN_STATE = 14;
 
     public static GameManager instance;
 
@@ -263,7 +263,8 @@ public class GameManager : NetworkBehaviour
 
 public class VideoInfo
 {
-    public string url;
+    public string Groundurl;
+    public string WallUrl;
     public string udp;
     public bool isLoop;
     public bool isBackToScreenProtect;
@@ -274,10 +275,11 @@ public class VideoInfo
 
     }
 
-    public VideoInfo(string _url, string _udp,bool _isLoop,bool _isBackToScreenProtect,bool _isScreenProtect)
+    public VideoInfo(string _Groundurl,string _wallUrl, string _udp,bool _isLoop,bool _isBackToScreenProtect,bool _isScreenProtect)
     {
-      url=_url;
-      udp=_udp;
+        Groundurl = _Groundurl;
+        WallUrl = _wallUrl;
+      udp =_udp;
       isLoop=_isLoop;
       isBackToScreenProtect = _isBackToScreenProtect;
       isScreenProtect=_isScreenProtect;

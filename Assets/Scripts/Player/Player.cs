@@ -87,7 +87,7 @@ public class Player : NetworkBehaviour
         XunLiangameStates.Add(GameState.训练进入人防游戏);
         XunLiangameStates.Add(GameState.训练解除警报);
         XunLiangameStates.Add(GameState.训练消除空袭后果);
-      //  XunLiangameStates.Add(GameState.训练总结);
+        XunLiangameStates.Add(GameState.训练总结);
 
         for (int i = 0; i < GameManager.MAX_XUN_LIAN_STATE; i++)
         {

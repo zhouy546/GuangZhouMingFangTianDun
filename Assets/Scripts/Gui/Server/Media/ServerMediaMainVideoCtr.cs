@@ -6,8 +6,11 @@ using UnityEngine;
 public class ServerMediaMainVideoCtr : MonoBehaviour
 {
 
-    public MediaPlayer mediaPlayer;
-    public DisplayUGUI ugui;
+    public MediaPlayer mediaPlayerGound;
+    public DisplayUGUI Groundugui;
+
+    public MediaPlayer mediaPlayerWall;
+    public DisplayUGUI Wallugui;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,48 +29,70 @@ public class ServerMediaMainVideoCtr : MonoBehaviour
 
     public void PlayVideo(string udp)
     {
+
+        //地面播放
         Debug.Log("PlayVideo");
         VideoInfo temp = GameManager.kp_udp_VideoInfo[udp];
 
-        mediaPlayer.OpenVideoFromFile(MediaPlayer.FileLocation.RelativeToStreamingAssetsFolder, temp.url, false);
+        mediaPlayerGound.OpenVideoFromFile(MediaPlayer.FileLocation.RelativeToStreamingAssetsFolder, temp.Groundurl, false);
 
-        mediaPlayer.Control.SetLooping(temp.isLoop);
+        mediaPlayerGound.Control.SetLooping(temp.isLoop);
 
-        mediaPlayer.Play();
+        mediaPlayerGound.Play();
 
-        ugui.color = new Color(255f, 255f, 255f, 255f);
+        Groundugui.color = new Color(255f, 255f, 255f, 255f);
+
+        //墙面播放
+        mediaPlayerWall.OpenVideoFromFile(MediaPlayer.FileLocation.RelativeToStreamingAssetsFolder, temp.WallUrl, false);
+
+        mediaPlayerWall.Control.SetLooping(temp.isLoop);
+
+        mediaPlayerWall.Play();
+
+        Wallugui.color = new Color(255f, 255f, 255f, 255f);
+
     }
 
     public void VolumeUp()
     {
-        float volume = mediaPlayer.Control.GetVolume() + 0.1f;
+        float volume = mediaPlayerGound.Control.GetVolume() + 0.1f;
         volume = Mathf.Clamp01(volume);
-        mediaPlayer.Control.SetVolume(volume);
+        mediaPlayerGound.Control.SetVolume(volume);
     }
 
     public void VolumeDown()
     {
-        float volume = mediaPlayer.Control.GetVolume() - 0.1f;
+        float volume = mediaPlayerGound.Control.GetVolume() - 0.1f;
         volume = Mathf.Clamp01(volume);
-        mediaPlayer.Control.SetVolume(volume);
+        mediaPlayerGound.Control.SetVolume(volume);
     }
 
     public void Stop()
     {
-        mediaPlayer.Stop();
-        mediaPlayer.CloseVideo();
+
+        //地面停止
+        mediaPlayerGound.Stop();
+        mediaPlayerGound.CloseVideo();
 
         SendUPDData.instance.udp_Send("1003", "127.0.0.1", 29010);
 
-        ugui.color = new Color(255f, 255f, 255f, 0);
+        Groundugui.color = new Color(255f, 255f, 255f, 0);
+
+        //墙面停止
+        mediaPlayerWall.Stop();
+        mediaPlayerWall.CloseVideo();
+        Wallugui.color = new Color(255f, 255f, 255f, 0);
 
     }
 
     public void OnVideoFinished()
     {
-        mediaPlayer.CloseVideo();
+        mediaPlayerGound.CloseVideo();
         SendUPDData.instance.udp_Send("1003","127.0.0.1", 29010);
 
-        ugui.color = new Color(255f, 255f, 255f, 0);
+        Groundugui.color = new Color(255f, 255f, 255f, 0);
+
+        mediaPlayerWall.CloseVideo();
+        Wallugui.color = new Color(255f, 255f, 255f, 0);
     }
 }

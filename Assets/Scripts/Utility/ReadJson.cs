@@ -187,14 +187,15 @@ public class ReadJson : MonoBehaviour {
 
         for (int i = 0; i < videoData.Count; i++)
         {
-            string url = videoData[i]["url"].ToString();
+            string Groundurl = videoData[i]["Groundurl"].ToString();
+            string WallUrl = videoData[i]["WallUrl"].ToString();
             string udp= videoData[i]["udp"].ToString();
             bool isScreenProtect = int.Parse(videoData[i]["loop"].ToString()) == 1 ? true : false;
             bool isBackToScreenProtect= int.Parse(videoData[i]["isBackToScreenProtect"].ToString()) == 1 ? true : false;
             bool isLoop = int.Parse(videoData[i]["iscreenprotect"].ToString()) == 1 ? true : false;
 
 
-            VideoInfo tempVideoInfo = new VideoInfo(url, udp, isLoop, isBackToScreenProtect, isScreenProtect);
+            VideoInfo tempVideoInfo = new VideoInfo(Groundurl, WallUrl, udp, isLoop, isBackToScreenProtect, isScreenProtect);
             GameManager.kp_udp_VideoInfo.Add(udp, tempVideoInfo);         
         }
 

@@ -65,6 +65,8 @@ public class ServerQA : I_Image
         Hide();
 
         ini();
+
+        ServerQAScoreboard.instance.Hide();
     }
 
     public override void Hide()
