@@ -1538,10 +1538,7 @@ MonoBehaviour:
   image: {fileID: 0}
   animator: {fileID: 0}
   debugText: {fileID: 757878479}
-  gameobjectGraphs:
-  - {fileID: 720297104}
-  - {fileID: 361944594}
-  - {fileID: 1587518273}
+  stages: []
   DefaultCountDown: 116
   currentCountDown: 116
 --- !u!1 &38089142
@@ -23760,8 +23757,8 @@ MonoBehaviour:
   debugText: {fileID: 995933737}
   clientYinDaoYuanBaseGameActive: {fileID: 34157962}
   clientZhiAnBaseGameActive: {fileID: 900675602}
-  clientHouQingBaseGameActive: {fileID: 37510052}
-  clientZhiYuanZheBaseGameActive: {fileID: 868932161}
+  clientHouQingBaseGameActive: {fileID: 868932161}
+  clientZhiYuanZheBaseGameActive: {fileID: 37510052}
   clientOtherBaseGameDisable: {fileID: 1506524037}
 --- !u!224 &662765176
 RectTransform:
@@ -30324,10 +30321,7 @@ MonoBehaviour:
   image: {fileID: 0}
   animator: {fileID: 0}
   debugText: {fileID: 349803478}
-  stages:
-  - {fileID: 1358943432}
-  - {fileID: 1173507881}
-  - {fileID: 816943512}
+  gameobjectGraphs: []
   DefaultCountDown: 116
   currentCountDown: 116
 --- !u!1 &869022998
@@ -44220,7 +44214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0dba532b99ecd94e8a82d1210e2491b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clientZhiYuanZheBaseGameActive: {fileID: 868932161}
+  clientZhiYuanZheBaseGameActive: {fileID: 0}
   BTNS:
   - {fileID: 1304852441}
   - {fileID: 993549611}
@@ -63034,7 +63028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 1949288129}
   goodsGroupCtrs: []
-  clientHouQingBaseGameActive: {fileID: 37510052}
+  clientHouQingBaseGameActive: {fileID: 0}
 --- !u!1 &1957296004
 GameObject:
   m_ObjectHideFlags: 0
