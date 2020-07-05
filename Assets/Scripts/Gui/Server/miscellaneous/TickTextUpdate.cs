@@ -7,6 +7,14 @@ public class TickTextUpdate : MonoBehaviour
 {
     public Text text;
     public Tick tick;
+    public static TickTextUpdate instance;
+
+
+    public void Awake()
+    {
+        instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +24,12 @@ public class TickTextUpdate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.text = tick.CurrentCountDonwTime.ToString();
+       // text.text = tick.CurrentCountDonwTime.ToString();
+    }
+
+    public void UpDateText(string s)
+    {
+
+        text.text = s;
     }
 }

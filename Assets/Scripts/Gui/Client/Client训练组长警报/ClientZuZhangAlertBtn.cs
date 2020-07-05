@@ -13,7 +13,11 @@ public class ClientZuZhangAlertBtn : I_Image
 
     //private string AfterBoardCastTest = "广播已发出";
 
+    public string[] EvluationString;
 
+    public string CurrentEvluationString;
+
+    public bool isPassed;
 
     public Image[] Graphs;
 
@@ -68,6 +72,42 @@ public class ClientZuZhangAlertBtn : I_Image
     public void OnBtnClick()
     {
         m_btn.interactable = false;
+        PassedTest();
+    }
+
+    public string[] getvluationString() {
+        string[] tempString = new string[2];
+        if (isPassed)
+        {
+            tempString[0] = isPassed.ToString();
+            tempString[1] = CurrentEvluationString;
+
+            return tempString;
+        }
+        else
+        {
+            NotPassedTest();
+
+            tempString[0] = isPassed.ToString();
+            tempString[1] = CurrentEvluationString;
+
+            return tempString;
+        }
+    }
+
+    public void PassedTest() {
+        isPassed = true;
+        CurrentEvluationString = EvluationString[0];
+    }
+
+    public void NotPassedTest() {
+        isPassed = false;
+        CurrentEvluationString = EvluationString[1];
+    }
+
+    public void ResetEvluation() {
+        isPassed = false;
+        CurrentEvluationString = "";
     }
 
     public void ResetMe()

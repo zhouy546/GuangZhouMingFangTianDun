@@ -19,6 +19,8 @@ public class ServerPeopleSelectionGui : I_Image
 
     public static ServerPeopleSelectionGui instance;
 
+
+
     public override void Awake()
     {
         base.Awake();
@@ -41,6 +43,9 @@ public class ServerPeopleSelectionGui : I_Image
         base.Hide();
         SelectionGui.SetActive(false);
         debugText.Hide();
+
+
+
     }
 
     public override void Show()
@@ -49,6 +54,48 @@ public class ServerPeopleSelectionGui : I_Image
         SelectionGui.SetActive(true);
         debugText.Show();
         SetTick();
+    }
+
+    public List<int> GetUnSelectedId()
+    {
+        List<int> temp = new List<int>();
+
+        for (int i = 0; i < ServerCharacterBtns.Count; i++)
+        {
+           if(!IsServerBtnLocked(i))
+            {
+                temp.Add(i);
+            }
+        }
+
+        foreach (var item in temp)
+        {
+            Debug.Log(item);
+
+        }
+
+
+        return temp;
+    }
+
+    public void SetUnSelectedPlayer(List<int> restSlotid)
+    {
+        int temp = 0;
+        foreach (var key in GameManager.players.Keys)
+        {
+            if (key != "Player3")
+            {
+                if (GameManager.instance.getCharacterByName(key).isLocked==false)
+                {
+                    Debug.Log("选中角色：" + key+ ":  "+ restSlotid[temp].ToString());
+                    GameManager.instance.SetCharacterSelectIDVal(key, restSlotid[temp]);
+                        temp++;
+                }
+            }
+        }
+
+
+
     }
 
     public bool IsServerBtnLocked(int id)

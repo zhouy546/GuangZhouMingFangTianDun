@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ServerQAUnit : MonoBehaviour
 {
    public Text SeatNumText;
-   public Text RightNumText;
+   //public Text RightNumText;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +21,17 @@ public class ServerQAUnit : MonoBehaviour
 
     public void SetText(string Seat,string Right)
     {
-        SeatNumText.text = Seat;
-        RightNumText.text = Right;
+        SeatNumText.text = (int.Parse(Seat)+1).ToString();
+     //   RightNumText.text = Right;
+    }
+
+    public void Show()
+    {
+        SeatNumText.color = new Color(SeatNumText.color.r, SeatNumText.color.g, SeatNumText.color.b, 255f);
+    }
+
+    public void Hide() {
+        SeatNumText.color = new Color(SeatNumText.color.r, SeatNumText.color.g, SeatNumText.color.b, 0f);
+
     }
 }

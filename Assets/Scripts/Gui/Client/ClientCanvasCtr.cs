@@ -96,8 +96,101 @@ public class ClientCanvasCtr : MonoBehaviour
         ClientPeopleSelectionGui.instance.ResetAll();
     }
 
+
+    public void UpdateMyEvluation()
+    {
+        List<bool> RightNum = new List<bool>();
+
+        string evlString = "";
+
+        Debug.Log(GameManager.GetCurrentLocalPlayer().name);
+
+        //获取本地玩家游戏评价
+        string localPlayerNamer = GameManager.GetCurrentLocalPlayer().name;
+
+        GameManager.characters character = GameManager.instance.getCharacterByName(localPlayerNamer);
+
+        professionalInfo ProfessionalInfo = GameManager.kp_LockedID_ProfessionalInfo[character.SelectID];
+
+        List<I_Image> ClientActiveStates = new List<I_Image>();
+        ClientActiveStates = ProfessionalInfo.ClientActiveState;
+
+
+        Debug.Log("需要检查的阶段数量：" + ClientActiveStates.Count);
+        foreach (var item in ClientActiveStates)
+        {
+            string[] temp = item.GetEvluationString();
+
+            Debug.Log(temp[1]);
+
+            RightNum.Add(ConverStringTureFalse(temp[0]));
+
+            evlString = evlString + temp[1] + "\n";//可能存在问题
+        }
+
+        Debug.Log(evlString);
+
+        int star = getStart(1, 3, RightNum);
+
+
+
+
+        Debug.Log("本地玩家姓名" + localPlayerNamer);
+
+        Player player = GameManager.GetCurrentLocalPlayer();
+
+        player.CmdSetPlayerStar_Evluation(player.name, evlString, star);
+
+
+        //  CmdSetPlayerStar_Evluation("Player4", "测试", star);
+
+        evlString = "";
+    }
+
+
+
+    bool ConverStringTureFalse(string s)
+    {
+
+        if (s == "True")
+        {
+            return true;
+        }
+        else if (s == "False")
+        {
+            return false;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    public int getStart(int outmin, int outmax, List<bool> b)
+    {
+        int rightDoing = 0;
+
+        foreach (var item in b)
+        {
+            if (item)
+            {
+                rightDoing++;
+            }
+        }
+
+        return Mathf.FloorToInt(M_Utility.Maping(rightDoing, 0, b.Count, outmin, outmax, true));
+
+
+    }
+
     public void Show(GameState _gameState)
     {
+
+        if (_gameState == GameState.训练总结)
+        {
+            UpdateMyEvluation();
+        }
         //if (XunLiangameStates.Contains(_gameState))
         //{
         //    foreach (var item in GameState_ClientGui_kP)

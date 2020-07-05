@@ -34,9 +34,12 @@ public class ServerExerciseConclusion : I_Image
     {
         base.Show();
         debugText.Show();
+        // SendUPDData.instance.udp_Send("1003", "127.0.0.1", 29010);
 
-        SendUPDData.instance.udp_Send("1003", "127.0.0.1", 29010);
+        //StartCoroutine(showEvl());
     }
+
+
 
     //public override void SetTick()
     //{

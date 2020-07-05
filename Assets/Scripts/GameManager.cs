@@ -34,11 +34,19 @@ public class GameManager : NetworkBehaviour
 
     public static string StopUdp;
 
+    public static bool isPause;
+
+    public static bool IsWenDaPlaying;
+
     public static Dictionary<string, VideoInfo> kp_udp_VideoInfo = new Dictionary<string, VideoInfo>();
 
     public static Dictionary<int, playerQAScore> kp_seatID_Answer = new Dictionary<int, playerQAScore>();
 
     public static Dictionary<int, QAinfo> kp_id_qAinfos = new Dictionary<int, QAinfo>();
+
+    public List<professionalInfo> professionalInfos = new List<professionalInfo>();
+
+    public static Dictionary<int, professionalInfo> kp_LockedID_ProfessionalInfo = new Dictionary<int, professionalInfo>();
 
     public static  int MAX_XUN_LIAN_STATE = 14;
 
@@ -62,7 +70,12 @@ public class GameManager : NetworkBehaviour
         public int SelectID;
         public bool isLocked;
         public string PlayerName;
+        //public string evalutionString;
+        //public int Star;
+
         public GameState gameState;
+
+
     }
 
     /// <summary>
@@ -72,7 +85,7 @@ public class GameManager : NetworkBehaviour
     /// <param name="_isLocked">是否锁定角色</param>
     /// <param name="_name">玩家名字PLAYERXXX</param>
     /// <param name="_YanYun">游戏状态</param>
-    public void IniCharacter(int _id, bool _isLocked, string _name, GameState _GameState)
+    public void IniCharacter(int _id, bool _isLocked, string _name, GameState _GameState/*,string _evalutionString, int _star*/)
     {
 
         characters cha = new characters();
@@ -80,6 +93,8 @@ public class GameManager : NetworkBehaviour
         cha.isLocked = _isLocked;
         cha.PlayerName = _name;
         cha.gameState = _GameState;
+   //     cha.evalutionString = _evalutionString;
+  //      cha.Star = _star;
         syncCharacter.Add(cha);
     }
 
@@ -107,6 +122,23 @@ public class GameManager : NetworkBehaviour
             syncCharacter[i] = temp;
         }
     }
+
+    //public void SetCharacterevalutionStringl(string PlayerName, string _evalutionString)
+    //{
+    //    int index = syncCharacter.IndexOf(getCharacterByName(PlayerName));
+    //    characters temp = syncCharacter[index];
+    //    temp.evalutionString = _evalutionString;
+    //    syncCharacter[index] = temp;
+    //}
+
+    //public void SetCharacterStarl(string PlayerName, int _star)
+    //{
+    //    int index = syncCharacter.IndexOf(getCharacterByName(PlayerName));
+    //    characters temp = syncCharacter[index];
+    //    temp.Star = _star;
+    //    syncCharacter[index] = temp;
+    //}
+
 
     public void SetCharacterSelectIDVal(string PlayerName, int _SelectID)
     {
@@ -191,6 +223,18 @@ public class GameManager : NetworkBehaviour
             playerQAScore tempQAscore = new playerQAScore(0, "F");
 
             kp_seatID_Answer.Add(i, tempQAscore);
+        }
+
+        ini_kp_LockedID_ProfessionalInfo();
+    }
+
+
+    public void ini_kp_LockedID_ProfessionalInfo()
+    {
+
+        foreach (var item in professionalInfos)
+        {
+            kp_LockedID_ProfessionalInfo.Add(professionalInfos.IndexOf(item), item);
         }
     }
 
@@ -325,6 +369,11 @@ public class playerQAScore
         currentSelectAnswer = "F";
     }
 
+    public void ResetCurrentAnswer()
+    {
+        currentSelectAnswer = "F";
+    }
+
     public void GainScore()
     {
         currentScore++;
@@ -333,6 +382,24 @@ public class playerQAScore
     public void setCurrentAnswer(string s)
     {
         currentSelectAnswer = s;
+    }
+}
+[System.Serializable]
+public class professionalInfo
+{
+    public string ProfessionInfoString;
+
+    public List<I_Image> ClientActiveState = new List<I_Image>();
+
+   // public string SeatID;
+
+    public professionalInfo(List<I_Image> _i_Images,string _ProfessionInfoString)
+    {
+        ProfessionInfoString = _ProfessionInfoString;
+
+        ClientActiveState = _i_Images;
+
+       // SeatID = _SeatID;
     }
 }
 

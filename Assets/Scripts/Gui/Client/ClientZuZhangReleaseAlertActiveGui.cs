@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ClientZuZhangReleaseAlertActiveGui : I_Image
 {
@@ -28,14 +29,17 @@ public class ClientZuZhangReleaseAlertActiveGui : I_Image
     {
         base.Hide();
         debugText.Hide();
-        subGraph.SetActive(false);
+        subGraph.GetComponent<Image>().raycastTarget = false;
+        subGraph.GetComponent<Image>().enabled=false;
     }
 
     public override void Show()
     {
         base.Show();
         debugText.Show();
-        subGraph.SetActive(true);
+        subGraph.GetComponent<Image>().raycastTarget = true;
+
+        subGraph.GetComponent<Image>().enabled = true;
 
     }
 

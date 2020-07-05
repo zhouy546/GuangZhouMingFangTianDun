@@ -11,6 +11,8 @@ public class ClientZuZhangAlert : I_Image
 
     public List<int> ActiveIndex = new List<int>();
 
+    public ClientZuZhangAlertBtn clientZuZhangAlertBtn;
+
     public override void Awake()
     {
         base.Awake();
@@ -63,5 +65,19 @@ public class ClientZuZhangAlert : I_Image
             clientZuZhangAlertActiveGui.Hide();
             clientZuZhangAlertDisableGui.Show();
         }
+    }
+
+    public override string[] GetEvluationString() {
+
+        foreach (var item in clientZuZhangAlertBtn.getvluationString())
+        {
+            Debug.Log(item);
+        }
+
+        return  clientZuZhangAlertBtn.getvluationString();
+    }
+
+    public override void ResetEvluationString() {
+        clientZuZhangAlertBtn.ResetEvluation();
     }
 }

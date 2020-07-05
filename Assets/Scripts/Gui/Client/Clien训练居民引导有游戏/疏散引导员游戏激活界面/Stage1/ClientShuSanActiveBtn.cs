@@ -1,10 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ClientShuSanActiveBtn : MonoBehaviour
 {
     public GameObject[] OnClickGraph;
+
+    public bool isRightAnswer;
+
+    public bool isSelected;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,11 +22,46 @@ public class ClientShuSanActiveBtn : MonoBehaviour
         
     }
 
-    public void OnClick() {
-        foreach (var item in OnClickGraph)
+    public bool getIsRightAnswer()
+    {
+        if (isSelected == isRightAnswer)
         {
-            item.SetActive(true);
+            return true;
         }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void ShowRightAnswer()
+    {
+        if (isRightAnswer)
+        {
+            this.GetComponent<Image>().color = Color.green;
+        }
+    }
+
+
+    public void OnClick() {
+        if (isSelected) {
+            foreach (var item in OnClickGraph)
+            {
+                item.SetActive(false);
+            }
+            isSelected = false;
+        }
+        else
+        {
+            foreach (var item in OnClickGraph)
+            {
+                item.SetActive(true);
+            }
+
+            isSelected = true;
+        }
+
+
     }
 
     public void OnEnable()
@@ -30,6 +70,7 @@ public class ClientShuSanActiveBtn : MonoBehaviour
         {
             item.SetActive(false);
         }
+        this.GetComponent<Image>().color = Color.white;
     }
 
 

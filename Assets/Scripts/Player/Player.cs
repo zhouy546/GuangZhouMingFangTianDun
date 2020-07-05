@@ -8,6 +8,9 @@ public class Player : NetworkBehaviour
 {
 
     public Sprite PlayerPhoto;
+    public int star;
+    public string evluationString;
+
     public List<LinkedListYanXiState> linkedListYanXiStates = new List<LinkedListYanXiState>();
 
     public List<GameState> XunLiangameStates = new List<GameState>();
@@ -139,6 +142,13 @@ public class Player : NetworkBehaviour
             {
                 return;
             }
+        }
+
+        if (_gameStates == GameState.训练总结)
+        {
+
+            StartCoroutine(showEvl());
+
         }
 
         GameManager.instance.SetAllCharacterStateVal(_gameStates);
@@ -274,6 +284,46 @@ public class Player : NetworkBehaviour
     {
         ClientCanvasCtr.instance.ResetClientCanvas();
     }
+
+
+
+    IEnumerator showEvl()
+    {
+        yield return new WaitForSeconds(4f);
+        Debug.Log(GameManager.GetPlayer("Player4").evluationString);
+    }
+
+
+
+    public List<GameManager.characters> getPlayerEvluation()
+    {
+
+        List<string> playerNames = new List<string>();
+
+        List<GameManager.characters> temp = new List<GameManager.characters>();
+
+        foreach (var item in GameManager.players.Keys)
+        {
+            if (item != "Player3")
+            {
+                temp.Add(GameManager.instance.getCharacterByName(item));
+            }
+        }
+        return temp;
+
+    }
+
+
+
+    [Command]
+    public void CmdSetPlayerStar_Evluation(string name, string evl, int start) {
+        Debug.Log("Server running"+evl);
+        GameManager.GetPlayer(name).evluationString = evl;
+        GameManager.GetPlayer(name).star = start;
+
+    }
+
+
 
 }
 [System.Serializable]

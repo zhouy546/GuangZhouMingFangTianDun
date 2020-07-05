@@ -6,6 +6,7 @@ using System.Linq;
 
 public class ServerQANode : I_Image
 {
+
     public Text QuestionText;
     public Text[] A1text;
 
@@ -16,10 +17,14 @@ public class ServerQANode : I_Image
 
     public ServerQANode next;
 
-    private int QuestionWaitTime=10;
+    public int QuestionWaitTime=10;
 
     List<string> topPlayer = new List<string>();
     // Start is called before the first frame update
+
+    public GameObject g_title;
+
+   public ServerQARightAnswerBoard serverQARightAnswerBoard;
     void Start()
     {
         EventCenter.AddListener(EventDefine.INI, Ini);
@@ -39,8 +44,17 @@ public class ServerQANode : I_Image
 
     public void SetQuestionText(string s)
     {
+          //  string questionNUM = (ServerQA.instance.serverQANodes.IndexOf(this) + 1).ToString() + '、';
+
         Question = s;
-        QuestionText.text = s;
+
+
+        QuestionText.text = Question;
+
+
+     //   string temp = QuestionText.text;
+
+  //      QuestionText.text = temp.Insert(0, questionNUM);
 
     }
 
@@ -67,10 +81,13 @@ public class ServerQANode : I_Image
     public override void Hide()
     {
         base.Hide();
+        g_title.SetActive(false);
     }
 
     public override void Show()
     {
+        g_title.SetActive(true);
+
         resetClientQAbtn();
 
         base.Show();
@@ -91,20 +108,49 @@ public class ServerQANode : I_Image
 
     }
 
+    private string ConvertAnswerToString(int index)
+    {
+        if (index == 0)
+        {
+            return "A";
+        }else if (index == 1)
+        {
+            return "B";
+        }
+
+        return "";
+    }
+
     IEnumerator CountDown()
     {
         QuestionWaitTime--;
+
+        ServerQADotsCtr.instance.CurrentCorrectAnswer = ConvertAnswerToString(RightAnswer);
+        QATickTextUpdate.instance.UpDateText(QuestionWaitTime.ToString());
+
+        //当时间剩余4秒时开始倒计时音效
+        if (QuestionWaitTime ==3) {
+            ServerQASoundManager.instance.PlayCountDownBeep();
+        }
+
         yield return new WaitForSeconds(1f);
         if (QuestionWaitTime <= 0)
         {
             if (next != null)
             {
-                A1text[RightAnswer].color = Color.green;
+                //正确答案显示
+                serverQARightAnswerBoard.SetAnswerText(ConvertAnswerToString(RightAnswer));
+                serverQARightAnswerBoard.SetAnswerContentText(A1[RightAnswer]);
 
 
-                yield return new WaitForSeconds(5);
+                //A1text[RightAnswer].color = Color.green;
+                serverQARightAnswerBoard.Show();
 
-                A1text[RightAnswer].color = Color.white;
+                ServerQASoundManager.instance.PlayRightAnswer();
+
+                yield return new WaitForSeconds(7);
+
+                //A1text[RightAnswer].color = Color.white;
                 next.Show();
                 Hide();
                 QuestionWaitTime = 10;
@@ -112,9 +158,28 @@ public class ServerQANode : I_Image
                 //结算所有玩家是否正确
                 UpdateAnswer();
 
+                //切换题目时重置答案
+                foreach (var item in GameManager.kp_seatID_Answer)
+                {
+                    item.Value.ResetCurrentAnswer();
+                }
+
             }
             else
             {
+
+                //A1text[RightAnswer].color = Color.green;
+                //正确答案显示
+                serverQARightAnswerBoard.SetAnswerText(ConvertAnswerToString(RightAnswer));
+                serverQARightAnswerBoard.SetAnswerContentText(A1[RightAnswer]);
+
+                serverQARightAnswerBoard.Show();
+                QuestionWaitTime = 10;
+
+                yield return new WaitForSeconds(7);
+
+                //   A1text[RightAnswer].color = Color.white;
+
                 Hide();
                 //最后结算所有玩家最高分，并且显示
                 ServerQAScoreboard.instance.Show();
@@ -130,6 +195,11 @@ public class ServerQANode : I_Image
                 {
                     item.Value.reset();
                 }
+
+                //播放胜利音乐
+                ServerQASoundManager.instance.PlayVirtorySound();
+                ServerQASoundManager.instance.StopBgm();
+
             }
         }
         else

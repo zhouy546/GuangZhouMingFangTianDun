@@ -7,6 +7,14 @@ public class ClientShuSanActiveGameSubmit : MonoBehaviour
 {
     public Button button;
     public Image image;
+
+    public ClientShuSanActiveBtn[] BTNS = new ClientShuSanActiveBtn[2];
+
+    public string eveluateString;
+
+    public string[] DefaulteveluateStrings = new string[1];
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +28,34 @@ public class ClientShuSanActiveGameSubmit : MonoBehaviour
     }
 
     public void OnClick() {
-        button.interactable = false;
-        image.raycastTarget = false;
+        if (isAnswercorrect())
+        {
+            //回答正确
+            button.interactable = false;
+            image.raycastTarget = false;
+        }
+        else
+        {
+            eveluateString = DefaulteveluateStrings[0];
+
+            foreach (var item in BTNS)
+            {
+                item.ShowRightAnswer();
+            }
+        }
+
+    }
+
+    public bool isAnswercorrect() {
+        for (int i = 0; i < BTNS.Length; i++)
+        {
+          if(!BTNS[i].getIsRightAnswer())
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public void OnDisable()
@@ -36,5 +70,7 @@ public class ClientShuSanActiveGameSubmit : MonoBehaviour
         Debug.Log("引导员界面显示");
         button.interactable = true;
         image.raycastTarget = true; ;
+
+        eveluateString = "";
     }
 }

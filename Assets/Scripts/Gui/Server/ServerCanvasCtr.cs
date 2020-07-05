@@ -44,6 +44,7 @@ public class ServerCanvasCtr : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+   //     Debug.Log(GameManager.IsWenDaPlaying);
 
     }
 
@@ -72,13 +73,16 @@ public class ServerCanvasCtr : MonoBehaviour
         }
 
 
-        if(_gameState== GameState.角色介绍)
+
+
+        if (_gameState== GameState.角色介绍)
         {
             MapAlertCtr.instance.PlayGroundVideo();
         }
 
         if (_gameState == GameState.训练前情提要)
         {
+            ServerPeopleSelectionGui.instance.SetUnSelectedPlayer(ServerPeopleSelectionGui.instance.GetUnSelectedId());//服务器自动为所有角色分配
             MapAlertCtr.instance.Show();
             MapAlertCtr.instance.StopGroundVideo();
         }

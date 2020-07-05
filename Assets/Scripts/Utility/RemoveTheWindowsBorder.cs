@@ -13,6 +13,10 @@ public class RemoveTheWindowsBorder : MonoBehaviour
     [DllImport("user32.dll")]
     static extern IntPtr GetForegroundWindow();
 
+    [DllImport("user32.dll")]
+    public static extern void SwitchToThisWindow(IntPtr hWnd, bool fAltTab);
+
+
 
     [DllImport("user32.dll", EntryPoint = "FindWindow")]
     private extern static IntPtr FindWindow(string lpClassName, string lpWindowName);
@@ -30,7 +34,7 @@ public class RemoveTheWindowsBorder : MonoBehaviour
      int _Txtheight;
     void Start()
     {
-
+    
 #if !UNITY_EDITOR && UNITY_STANDALONE_WIN
 
         EventCenter.AddListener(EventDefine.INI, ini);
@@ -66,7 +70,12 @@ public class RemoveTheWindowsBorder : MonoBehaviour
 
 
         SetWindowLong(hWnd, GWL_STYLE, WS_POPUP);      //无边框
+
+        SwitchToThisWindow(hWnd, true);    // 激活，显示在最前 
         bool result = SetWindowPos(hWnd, 0, GameManager.Xpos, GameManager.Ypos, GameManager.ScreenWidth + offset, GameManager.ScreenHeight + offset, SWP_SHOWWINDOW);       //设置屏幕大小和位置
+
+        yield return new WaitForSeconds(0.5f);
+        TestMoveAndClickMouse();
     }
 
     //IEnumerator ReSetposition()
@@ -98,11 +107,12 @@ public class RemoveTheWindowsBorder : MonoBehaviour
     const int MOUSEEVENTF_WHEEL = 0x0800;
 
 
-    public static void TestMoveMouse()
+    public static void TestMoveAndClickMouse()
     {
         Console.WriteLine("模拟鼠标移动5个像素点。");
-        //mouse_event(MOUSEEVENTF_MOVE, 50, 50, 0, 0);//相对当前鼠标位置x轴和y轴分别移动50像素
-        mouse_event(MOUSEEVENTF_WHEEL, 0, 0, -20, 0);//鼠标滚动，使界面向下滚动20的高度
+        mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE, 500, 500, 0, 0);
+         mouse_event(MOUSEEVENTF_LEFTDOWN, 0,0, 0, 0);
+         mouse_event(MOUSEEVENTF_LEFTUP,0,0, 0, 0);
     }
 
 }

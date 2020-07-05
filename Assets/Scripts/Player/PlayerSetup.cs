@@ -43,9 +43,26 @@ public class PlayerSetup : NetworkBehaviour
 
         GameManager.RegisterPlayer(_netID, _player);
 
+        Debug.Log("ClientStart");
 
 
     }
+
+    public override void OnNetworkDestroy()
+    {
+
+        Debug.Log("NetworkDestory");
+
+        base.OnNetworkDestroy();
+    }
+
+    public override void OnStopAuthority()
+    {
+        base.OnStopAuthority();
+        Debug.Log("OnStopAuthority");
+
+    }
+
 
     public void OnConnectedToServer()
     {

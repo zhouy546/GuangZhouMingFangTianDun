@@ -37,7 +37,6 @@ public class DealWithUDPMessage : NetworkBehaviour
     [Server]
     public void MessageManage(string _data)
     {
-
     //    Debug.Log("DEALWITH MSG " + _data);
         if (_data != "")
         {
@@ -57,9 +56,15 @@ public class DealWithUDPMessage : NetworkBehaviour
                 PlayerChangeState(GameState.默认界面);
 
                 EventCenter.Broadcast<string>(EventDefine.PlayMainVideo, dataTest);
-
-
             }
+            else if(dataTest == "1001")
+            {
+                if (GameManager.instance.getCharacterByName(GameManager.GetServerPlayer().name).gameState == GameState.问答&&GameManager.IsWenDaPlaying ==false)
+                {
+                    ServerQA.instance.ShowMainQuestion();
+                }
+            }
+
             else if (dataTest == "1002")
             {
                 ResetSyncVal(GameState.默认界面);
@@ -69,6 +74,22 @@ public class DealWithUDPMessage : NetworkBehaviour
             {
                 ResetSyncVal(GameState.默认界面);
                 PlayerChangeState(GameState.默认界面);
+            }
+
+            else if(dataTest == "pause")
+            {
+
+                if (GameManager.isPause)
+                {
+                    EventCenter.Broadcast(EventDefine.XunLianContinue);
+                }
+                else
+                {
+                    EventCenter.Broadcast(EventDefine.XunLianPause);
+                }
+
+                GameManager.isPause = !GameManager.isPause;
+
             }
 
             else if (dataTest == GameManager.VolumeDownUDP)

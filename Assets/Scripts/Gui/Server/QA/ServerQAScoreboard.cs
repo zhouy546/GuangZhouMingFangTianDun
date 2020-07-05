@@ -11,6 +11,16 @@ public class ServerQAScoreboard : MonoBehaviour
     public List<ServerQAUnit> serverQANodes = new List<ServerQAUnit>();
 
     public   GameObject Graph;
+
+    public ParticleSystem virtroryParticle;
+
+    public GameObject[] turnOffGameObject;
+
+    public QATickTextUpdate qATickTextUpdate;
+
+    public ServerQADotsCtr serverQADotsCtr;
+
+    public ServerQAVirtoryParticle serverQAVirtoryParticle;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -32,11 +42,36 @@ public class ServerQAScoreboard : MonoBehaviour
     public void Show()
     {
         Graph.SetActive(true);
+
+        foreach (var item in serverQANodes)
+        {
+            item.Show();
+        }
+
+        virtroryParticle.Play();
+
+        foreach (var item in turnOffGameObject)
+        {
+            item.SetActive(false);
+        }
+
+        qATickTextUpdate.Hide();
+
+        serverQADotsCtr.Hide();
+
+        serverQAVirtoryParticle.Show();
     }
 
     public void Hide()
     {
         Graph.SetActive(false);
+
+        foreach (var item in serverQANodes)
+        {
+            item.Hide();
+        }
+
+        virtroryParticle.Stop();
     }
 
     public void SetText(string s)

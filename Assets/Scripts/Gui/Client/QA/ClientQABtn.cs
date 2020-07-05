@@ -32,7 +32,7 @@ public class ClientQABtn : I_Image
         SendUPDData.instance.udp_Send(S, GameManager.ServerIp, GameManager.ServerUDPPort);
         Debug.Log("Sentupd");
         this.GetComponent<Button>().interactable = false;
-        btn.interactable = true;
+        btn.interactable = false;
 
 
     }

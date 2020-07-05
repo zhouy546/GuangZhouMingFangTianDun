@@ -15,6 +15,9 @@ public class Tick : MonoBehaviour
     public delegate void StopCountDonw();
     public event StopCountDonw stopCountDonwEvent;
 
+    public delegate void PauseCountDonw();
+    public event PauseCountDonw pauseCountDonwEvent;
+
     public delegate void ResetTime();
     public event ResetTime resetTimeEvent;
 
@@ -37,6 +40,14 @@ public class Tick : MonoBehaviour
         // finishCountDownEvent += EndCountDown;
         stopCountDonwEvent += stopCountdonw;
         resetTimeEvent += resetCurrentCountDonwTime;
+
+        pauseCountDonwEvent += pauseCountDonw;
+
+
+        EventCenter.AddListener(EventDefine.XunLianPause, Func_PauseCountDown);
+
+        EventCenter.AddListener(EventDefine.XunLianContinue, Func_StartCountDonw);
+
     }
 
     // Update is called once per frame
@@ -53,6 +64,12 @@ public class Tick : MonoBehaviour
 
     public void Func_ResetTime() {
         resetTimeEvent.Invoke();
+    }
+
+    public void Func_PauseCountDown()
+    {
+        IsCountDonw = false;
+        pauseCountDonwEvent.Invoke();
     }
 
     public void Func_StopCountDonw() {
@@ -75,6 +92,9 @@ public class Tick : MonoBehaviour
 
     private IEnumerator CountDown() {
         CurrentCountDonwTime--;
+
+        TickTextUpdate.instance.UpDateText(CurrentCountDonwTime.ToString());
+
         yield return new WaitForSeconds(1f);
         //Debug.Log(CurrentCountDonwTime);
         if (CurrentCountDonwTime <= 0)
@@ -102,6 +122,10 @@ public class Tick : MonoBehaviour
    //     Debug.Log("Stop CountDonw");
         StopAllCoroutines();
         Func_ResetTime();
+    }
+
+    private void pauseCountDonw() {
+        StopAllCoroutines();
     }
 
     public void RegisterfinishCountDownEventr(FinishCountDown finishCountDown)

@@ -10,6 +10,8 @@ public class ClientCancelAlert : I_Image
     public ClientZuZhangReleaseAlertDisableGui clientZuZhangReleaseAlertDisableGui;
 
     public List<int> ActiveIndex = new List<int>();
+
+    public ClientJieChuFangKongBtn clientJieChuFangKongBtn;
     // Start is called before the first frame update
     void Start()
     {
@@ -56,5 +58,16 @@ public class ClientCancelAlert : I_Image
             clientZuZhangReleaseAlertActiveGui.Hide();
             clientZuZhangReleaseAlertDisableGui.Show();
         }
+    }
+
+
+    public override string[] GetEvluationString()
+    {
+        return clientJieChuFangKongBtn.getvluationString();
+    }
+
+    public override void ResetEvluationString()
+    {
+        clientJieChuFangKongBtn.ResetEvluation();
     }
 }

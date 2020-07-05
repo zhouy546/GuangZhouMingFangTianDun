@@ -32,4 +32,6 @@ public class ClientExerciseConclusion : I_Image
         base.Show();
         debugText.Show();
     }
+
+    
 }

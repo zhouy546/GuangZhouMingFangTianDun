@@ -49,4 +49,14 @@ public class I_Image : MonoBehaviour
     public virtual void PlayVideo() {
 
     }
-}
+
+    public virtual string[] GetEvluationString() {
+        string[] temp = new string[2];
+        return temp;
+    }
+
+    public virtual void ResetEvluationString()
+    {
+
+    }
+    }

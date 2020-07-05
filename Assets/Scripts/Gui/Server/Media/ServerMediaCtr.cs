@@ -10,6 +10,13 @@ public class ServerMediaCtr : MonoBehaviour
     public DisplayUGUI displayUGUI; 
 
     public static ServerMediaCtr instance;
+
+    private void Awake()
+    {
+        EventCenter.AddListener(EventDefine.XunLianPause, pauseVideo);
+        EventCenter.AddListener(EventDefine.XunLianContinue, ContinueVideo);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +29,16 @@ public class ServerMediaCtr : MonoBehaviour
         
     }
 
+
+    public void pauseVideo() {
+        mediaPlayer.Pause();
+    }
+
+    public void ContinueVideo()
+    {
+        mediaPlayer.Play();
+    }
+
     public void PlayVideo(string path) {
         SetVideoColorAlpha(255f);
         mediaPlayer.OpenVideoFromFile(MediaPlayer.FileLocation.RelativeToStreamingAssetsFolder, path, true);
@@ -29,7 +46,7 @@ public class ServerMediaCtr : MonoBehaviour
 
     public void SetVideoColorAlpha(float a)
     {
-        Debug.Log(a);
+     //   Debug.Log(a);
         displayUGUI.color = new Color(displayUGUI.color.r, displayUGUI.color.g, displayUGUI.color.b, a);
     }
 

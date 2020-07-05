@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ServerQA : I_Image
 {
@@ -10,6 +11,16 @@ public class ServerQA : I_Image
     public List<int> questionID = new List<int>();
 
     public static ServerQA instance;
+
+    public GameObject InfoGameObject;
+
+    public GameObject g_Graphs;
+
+    public GameObject GroundBGImage;
+
+    public ServerQAMediaCtr QAMediaCtr;
+
+    public QATickTextUpdate qATickTextUpdate;
     // Start is called before the first frame update
     public    override void Awake()
     {
@@ -44,7 +55,7 @@ public class ServerQA : I_Image
             serverQANodes[questionID.IndexOf(item)].SetQuestionText(question);
             serverQANodes[questionID.IndexOf(item)].SetRightAnswer(RightAnswer);
         }
-   
+        InfoGameObject.SetActive(false);
     }
 
 
@@ -67,19 +78,67 @@ public class ServerQA : I_Image
         ini();
 
         ServerQAScoreboard.instance.Hide();
+        InfoGameObject.SetActive(false);
+        ServerQASoundManager.instance.StopBgm();
+        QAMediaCtr.StopMedia(); ;
+
+        QATickTextUpdate.instance.Hide();
     }
 
     public override void Hide()
     {
         base.Hide();
         debugText.Hide();
+        InfoGameObject.SetActive(false);
+        QAMediaCtr.StopMedia();
+
+        QATickTextUpdate.instance.Hide();
+
+        g_Graphs.SetActive(false);
+
+        GameManager.IsWenDaPlaying = false;
+
+        StopAllCoroutines();
+
+        GroundBGImage.SetActive(false);
+
     }
 
     public override void Show()
     {
         base.Show();
+
+        InfoGameObject.SetActive(true);
+        QAMediaCtr.PlayMedia();
+
+        g_Graphs.SetActive(true);
+
+        ServerQASoundManager.instance.PlayBGM();
+
+        StartCoroutine(AutoJump());
+
+        GroundBGImage.SetActive(true);
+
+    }
+
+    IEnumerator AutoJump() {
+        yield return new WaitForSeconds(15f);
+
+        SendUPDData.instance.udp_Send("1001", "127.0.0.1", 29010);
+    }
+
+    public void ShowMainQuestion()
+    {
+        GameManager.IsWenDaPlaying = true;
+
+
         debugText.Show();
         serverQANodes[0].Show();
+
+        InfoGameObject.SetActive(false);
+        QATickTextUpdate.instance.Show();
+
+
 
     }
 }
